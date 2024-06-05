@@ -1,0 +1,35 @@
+GET http://localhost:3000/ads
+
+###
+POST http://localhost:3000/ads
+Content-Type: application/json
+
+{
+    "title": "My first real ad!",
+    "description": "lorem ipsum blablablabla",
+    "owner": "anon@gmail.com",
+    "price": 42,
+    "picture": "https://www.automobile-magazine.fr/asset/cms/34973/config/28294/apres-plusieurs-prototypes-la-bollore-bluecar-a-fini-par-devoiler-sa-version-definitive.jpg",
+    "location": "Paris",
+    "createdAt": "2024-10-05T10:14:15.922Z"
+}
+
+###
+DELETE http://localhost:3000/ads/3
+
+###
+PUT http://localhost:3000/ads/3
+Content-Type: application/json
+
+{
+    "name":"blu"
+}
+
+###
+PATCH http://localhost:3000/ads/3
+Content-Type: application/json
+
+{
+    "name":"blu"
+}
+

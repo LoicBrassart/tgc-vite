@@ -1,35 +1,13 @@
 import express from "express";
 import * as dotenv from "dotenv";
+import sqlite from "sqlite3";
 
 dotenv.config();
-const port = process.env.BACKEND_PORT;
+const { BACKEND_PORT, BACKEND_DBFILE } = process.env;
+if (!BACKEND_DBFILE || !BACKEND_PORT)
+  throw new Error("Missing essential env variables!");
 
-let ads = [
-  {
-    id: 1,
-    title: "Bike to sell",
-    description:
-      "My bike is blue, working fine. I'm selling it because I've got a new one",
-    owner: "bike.seller@gmail.com",
-    price: 100,
-    picture:
-      "https://images.lecho.be/view?iid=dc:113129565&context=ONLINE&ratio=16/9&width=640&u=1508242455000",
-    location: "Paris",
-    createdAt: "2023-09-05T10:13:14.755Z",
-  },
-  {
-    id: 2,
-    title: "Car to sell",
-    description:
-      "My car is blue, working fine. I'm selling it because I've got a new one",
-    owner: "car.seller@gmail.com",
-    price: 10000,
-    picture:
-      "https://www.automobile-magazine.fr/asset/cms/34973/config/28294/apres-plusieurs-prototypes-la-bollore-bluecar-a-fini-par-devoiler-sa-version-definitive.jpg",
-    location: "Paris",
-    createdAt: "2023-10-05T10:14:15.922Z",
-  },
-];
+const db = new sqlite.Database(BACKEND_DBFILE);
 
 const app = express();
 app.use(express.json());
@@ -38,53 +16,91 @@ app.get("/", (_, res) => {
   res.send("Hello World!");
 });
 
-app.get("/ads", (_, res) => {
-  res.send(ads);
+app.get("/ads", async (_, res) => {
+  const sql = "SELECT * FROM ads";
+  db.all(sql, (err, rows) => {
+    if (err) return res.status(500).send(err.message);
+    return res.send(rows);
+  });
 });
 
 app.get("/ads/:id", (req, res) => {
-  res.send(ads.find((elt) => elt.id === Number(req.params.id)));
+  const sql = "SELECT * FROM ads WHERE id=?";
+  const id = Number(req.params.id);
+  db.get(sql, [id], (err, rows) => {
+    if (err) return res.status(500).send(err.message);
+    return res.send(rows);
+  });
 });
 
 app.post("/ads", (req, res) => {
-  const newId =
-    1 +
-    ads.reduce((acc, ad) => {
-      return Math.max(acc, ad.id);
-    }, 0);
-  ads.push({ ...req.body, id: newId });
-  res.send(`Added ad #${newId}`);
+  const sql =
+    "INSERT INTO ads(title, description, owner, price, picture, location) VALUES(?,?,?,?,?,?)";
+  const { title, description, owner, price, picture, location } = req.body;
+  db.run(sql, [title, description, owner, price, picture, location], (err) => {
+    if (err) return res.status(500).send(err.message);
+    return res.status(201).send();
+  });
 });
 
 app.delete("/ads/:id", (req, res) => {
-  ads = ads.filter((ad) => ad.id !== Number(req.params.id));
-  res.send("The ad was deleted");
+  const sql = "DELETE FROM ads WHERE id=?";
+  const id = Number(req.params.id);
+  db.run(sql, [id], (err) => {
+    if (err) return res.status(500).send(err.message);
+    return res.status(204).send();
+  });
 });
 
 app.put("/ads/:id", (req, res) => {
-  ads = ads.map((ad) => {
-    const newId = Number(req.params.id);
-    if (ad.id !== newId) {
-      return ad;
-    } else {
-      return { ...req.body, id: newId };
+  const sql = `
+  UPDATE ads SET 
+    title=?,
+    description=?,
+    owner=?,
+    price=?,
+    picture=?,
+    location=?
+  WHERE id=?`;
+  const id = Number(req.params.id);
+  const { title, description, owner, price, picture, location } = req.body;
+  db.run(
+    sql,
+    [title, description, owner, price, picture, location, id],
+
+    (err) => {
+      if (err) return res.status(500).send(err.message);
+      return res.status(204).send();
     }
-  });
-  res.send("The ad was replaced");
+  );
 });
 
 app.patch("/ads/:id", (req, res) => {
-  ads = ads.map((ad) => {
-    const newId = Number(req.params.id);
-    if (ad.id !== newId) {
-      return ad;
-    } else {
-      return { ...ad, ...req.body, id: newId };
+  console.log("---------?");
+  const sql = `
+  UPDATE ads SET 
+    title=COALESCE(?,title), 
+    description=COALESCE(?,description), 
+    owner=COALESCE(?,owner), 
+    price=COALESCE(?,price), 
+    picture=COALESCE(?,picture), 
+    location=COALESCE(?,location) 
+  WHERE id=?`;
+  const id = Number(req.params.id);
+  const { title, description, owner, price, picture, location } = req.body;
+  db.run(
+    sql,
+    [title, description, owner, price, picture, location, id],
+    (err) => {
+      console.log("---------IN");
+      console.log(err);
+
+      if (err) return res.status(500).send(err.message);
+      return res.status(204).send();
     }
-  });
-  res.send("The ad was updated");
+  );
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+app.listen(BACKEND_PORT, () => {
+  console.log(`Example app listening on port ${BACKEND_PORT}`);
 });

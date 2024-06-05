@@ -1,6 +1,9 @@
 GET http://localhost:3000/ads
 
 ###
+GET http://localhost:3000/ads/2
+
+###
 POST http://localhost:3000/ads
 Content-Type: application/json
 
@@ -15,10 +18,10 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:3000/ads/3
+DELETE http://localhost:3000/ads/4
 
 ###
-PUT http://localhost:3000/ads/3
+PUT http://localhost:3000/ads/4
 Content-Type: application/json
 
 {
@@ -26,10 +29,10 @@ Content-Type: application/json
 }
 
 ###
-PATCH http://localhost:3000/ads/3
+PATCH http://localhost:3000/ads/4
 Content-Type: application/json
 
 {
-    "name":"blu"
+    "title":"blu"
 }
 

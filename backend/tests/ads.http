@@ -14,7 +14,8 @@ Content-Type: application/json
     "price": 42,
     "picture": "https://www.automobile-magazine.fr/asset/cms/34973/config/28294/apres-plusieurs-prototypes-la-bollore-bluecar-a-fini-par-devoiler-sa-version-definitive.jpg",
     "location": "Paris",
-    "createdAt": "2024-10-05T10:14:15.922Z"
+    "createdAt": "2024-10-05T10:14:15.922Z",
+    "id_category":3
 }
 
 ###

@@ -1,13 +1,14 @@
+import "reflect-metadata";
 import express from "express";
 import * as dotenv from "dotenv";
-import sqlite from "sqlite3";
+import { dataSource } from "./config/db";
+import { Ad } from "./entities/Ad";
+import { Category } from "./entities/Category";
 
 dotenv.config();
 const { BACKEND_PORT, BACKEND_DBFILE } = process.env;
 if (!BACKEND_DBFILE || !BACKEND_PORT)
   throw new Error("Missing essential env variables!");
-
-const db = new sqlite.Database(BACKEND_DBFILE);
 
 const app = express();
 app.use(express.json());
@@ -17,121 +18,138 @@ app.get("/", (_, res) => {
 });
 
 app.get("/ads", async (_, res) => {
-  const sql = "SELECT * FROM ads";
-  db.all(sql, (err, rows) => {
-    if (err) return res.status(500).send(err.message);
-    return res.send(rows);
-  });
+  try {
+    const ads = await Ad.find();
+    return res.status(201).json(ads);
+  } catch (err) {
+    return res.status(500).send(err.message);
+  }
 });
 
-app.get("/ads/:id", (req, res) => {
-  const sql = "SELECT * FROM ads WHERE id=?";
-  const id = Number(req.params.id);
-  db.get(sql, [id], (err, rows) => {
-    if (err) return res.status(500).send(err.message);
-    return res.send(rows);
-  });
+app.get("/ads/:id", async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const ads = await Ad.findOneByOrFail({ id });
+    return res.status(201).json(ads);
+  } catch (err) {
+    return res.status(500).send(err.message);
+  }
 });
 
-app.post("/ads", (req, res) => {
-  const sql =
-    "INSERT INTO ads(title, description, owner, price, picture, location, id_category) VALUES(?,?,?,?,?,?,?)";
-  const { title, description, owner, price, picture, location, id_category } =
-    req.body;
-  db.run(
-    sql,
-    [title, description, owner, price, picture, location, id_category],
-    (err) => {
-      if (err) return res.status(500).send(err.message);
-      return res.status(201).send();
-    }
-  );
+app.post("/ads", async (req, res) => {
+  try {
+    const { title, description, owner, price, picture, location, id_category } =
+      req.body;
+
+    const category = await Category.findOneByOrFail({ id: id_category });
+    const ad = new Ad();
+    ad.title = title;
+    ad.description = description;
+    ad.owner = owner;
+    ad.price = price;
+    ad.location = location;
+    ad.imgUrl = picture;
+    ad.category = category;
+
+    await ad.save();
+    return res.status(201).json(ad);
+  } catch (err) {
+    return res.status(500).send(err.message);
+  }
 });
 
 app.delete("/ads/:id", (req, res) => {
-  const sql = "DELETE FROM ads WHERE id=?";
-  const id = Number(req.params.id);
-  db.run(sql, [id], (err) => {
-    if (err) return res.status(500).send(err.message);
+  try {
+    const id = Number(req.params.id);
+    Ad.delete(id);
     return res.status(204).send();
-  });
+  } catch (err) {
+    return res.status(500).send(err.message);
+  }
 });
 
-app.put("/ads/:id", (req, res) => {
-  const sql = `
-  UPDATE ads SET 
-    title=?,
-    description=?,
-    owner=?,
-    price=?,
-    picture=?,
-    location=?,
-    id_category=?
-  WHERE id=?`;
-  const id = Number(req.params.id);
-  const { title, description, owner, price, picture, location, id_category } =
-    req.body;
-  db.run(
-    sql,
-    [title, description, owner, price, picture, location, id_category, id],
+app.put("/ads/:id", async (req, res) => {
+  try {
+    const { title, description, owner, price, picture, location, id_category } =
+      req.body;
+    const id = Number(req.params.id);
 
-    (err) => {
-      if (err) return res.status(500).send(err.message);
-      return res.status(204).send();
-    }
-  );
+    const category = await Category.findOneByOrFail({ id: id_category });
+    const ad = await Ad.findOneByOrFail({ id });
+    ad.title = title;
+    ad.description = description;
+    ad.owner = owner;
+    ad.price = price;
+    ad.location = location;
+    ad.imgUrl = picture;
+    ad.category = category;
+
+    await ad.save();
+    return res.status(201).json(ad);
+  } catch (err) {
+    return res.status(500).send(err.message);
+  }
 });
 
-app.patch("/ads/:id", (req, res) => {
-  const sql = `
-  UPDATE ads SET 
-    title=COALESCE(?,title), 
-    description=COALESCE(?,description), 
-    owner=COALESCE(?,owner), 
-    price=COALESCE(?,price), 
-    picture=COALESCE(?,picture), 
-    location=COALESCE(?,location),
-    id_category=COALESCE(?,id_category) 
-  WHERE id=?`;
-  const id = Number(req.params.id);
-  const { title, description, owner, price, picture, location, id_category } =
-    req.body;
-  db.run(
-    sql,
-    [title, description, owner, price, picture, location, id_category, id],
-    (err) => {
-      if (err) return res.status(500).send(err.message);
-      return res.status(204).send();
-    }
-  );
+app.patch("/ads/:id", async (req, res) => {
+  try {
+    const { title, description, owner, price, picture, location, id_category } =
+      req.body;
+    const id = Number(req.params.id);
+
+    const category = await Category.findOneByOrFail({ id: id_category });
+    const ad = await Ad.findOneByOrFail({ id });
+    ad.title = title || ad.title;
+    ad.description = description || ad.description;
+    ad.owner = owner || ad.owner;
+    ad.price = price || ad.price;
+    ad.location = location || ad.location;
+    ad.imgUrl = picture || ad.imgUrl;
+    ad.category = category || ad.category;
+
+    await ad.save();
+    return res.status(201).json(ad);
+  } catch (err) {
+    return res.status(500).send(err.message);
+  }
 });
 
 app.get("/categories/:id/ads", async (req, res) => {
-  const sql = "SELECT * FROM ads WHERE id_category=?";
-  const id = Number(req.params.id);
-  db.all(sql, [id], (err, rows) => {
-    if (err) return res.status(500).send(err.message);
-    return res.send(rows);
-  });
+  try {
+    const id = Number(req.params.id);
+    const ads = await Ad.findBy({ category: { id } });
+    return res.status(201).json(ads);
+  } catch (err) {
+    return res.status(500).send(err.message);
+  }
 });
 
-app.get("/ads", async (_, res) => {
-  const sql = "SELECT * FROM categories";
-  db.all(sql, (err, rows) => {
-    if (err) return res.status(500).send(err.message);
-    return res.send(rows);
-  });
+app.get("/categories", async (_, res) => {
+  try {
+    const categories = await Category.find();
+    return res.status(201).json(categories);
+  } catch (err) {
+    return res.status(500).send(err.message);
+  }
 });
 
-app.post("/categories", (req, res) => {
-  const sql = "INSERT INTO categories(name) VALUES(?)";
-  const { name } = req.body;
-  db.run(sql, [name], (err) => {
-    if (err) return res.status(500).send(err.message);
-    return res.status(201).send();
-  });
+app.post("/categories", async (req, res) => {
+  try {
+    const { name } = req.body;
+
+    const category = new Category();
+    category.name = name;
+    console.log(category);
+
+    await category.save();
+    return res.status(201).json(category);
+  } catch (err) {
+    return res.status(500).send(err.message);
+  }
 });
 
-app.listen(BACKEND_PORT, () => {
+app.listen(BACKEND_PORT, async () => {
+  await dataSource.initialize();
+
   console.log(`Example app listening on port ${BACKEND_PORT}`);
 });

@@ -1,12 +1,11 @@
 GET http://localhost:3000/categories
 
 ###
-
-POST http://localhost:3000/ads
+POST http://localhost:3000/categories
 Content-Type: application/json
 
 {
-    "name": "Toys",
+    "name": "Toys"
 }
 
 ###

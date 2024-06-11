@@ -1,7 +1,10 @@
 GET http://localhost:3000/ads
 
 ###
-GET http://localhost:3000/ads/1
+GET http://localhost:3000/ads?category=1
+
+###
+GET http://localhost:3000/ads/14
 
 ###
 POST http://localhost:3000/ads
@@ -15,7 +18,8 @@ Content-Type: application/json
     "picture": "https://www.automobile-magazine.fr/asset/cms/34973/config/28294/apres-plusieurs-prototypes-la-bollore-bluecar-a-fini-par-devoiler-sa-version-definitive.jpg",
     "location": "Paris",
     "createdAt": "2024-10-05T10:14:15.922Z",
-    "id_category":3
+    "id_category":3,
+    "id_tags":[1,2]
 }
 
 ###
@@ -26,7 +30,8 @@ PUT http://localhost:3000/ads/4
 Content-Type: application/json
 
 {
-    "name":"blu"
+    "name":"blu",
+    "id_tags":[1,2]
 }
 
 ###

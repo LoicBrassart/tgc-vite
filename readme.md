@@ -10,3 +10,4 @@
 - Add script to seed database
 - Add category table and routes
 - Install & use TypeORM
+- Add Tag entity, fixtures, routes

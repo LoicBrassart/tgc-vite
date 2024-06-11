@@ -1,6 +1,9 @@
 GET http://localhost:3000/categories
 
 ###
+GET http://localhost:3000/categories?needle=a
+
+###
 POST http://localhost:3000/categories
 Content-Type: application/json
 

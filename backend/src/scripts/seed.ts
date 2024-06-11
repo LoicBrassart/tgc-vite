@@ -3,6 +3,7 @@ import * as dotenv from "dotenv";
 import { dataSource } from "../config/db";
 import { Ad } from "../entities/Ad";
 import { Category } from "../entities/Category";
+import { Tag } from "../entities/Tag";
 
 dotenv.config();
 const { BACKEND_PORT, BACKEND_DBFILE } = process.env;
@@ -18,6 +19,11 @@ const categoriesData = [
   },
   {
     name: "Autres",
+  },
+];
+const tagsData = [
+  {
+    name: "Blue",
   },
 ];
 const adsData = [
@@ -58,6 +64,15 @@ async function seed() {
     );
     console.log("Categories enregistrées avec succès:", savedCategories.length);
 
+    const savedTags = await Promise.all(
+      tagsData.map(async (tagData) => {
+        const tag = new Tag();
+        tag.name = tagData.name;
+        return tag.save();
+      })
+    );
+    console.log("Tags enregistrés avec succès:", savedTags.length);
+
     const savedAds = await Promise.all(
       adsData.map(async (adData) => {
         const ad = new Ad();
@@ -68,6 +83,7 @@ async function seed() {
         ad.owner = adData.owner;
         ad.price = adData.price;
         ad.category = savedCategories[0];
+        ad.tags = [savedTags[0]];
 
         return ad.save();
       })

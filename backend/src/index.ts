@@ -5,6 +5,7 @@ import { dataSource } from "./config/db";
 import adRouter from "./routes/ads";
 import categoryRouter from "./routes/categories";
 import tagRouter from "./routes/tags";
+import cors from "cors";
 
 dotenv.config();
 const { BACKEND_PORT, BACKEND_DBFILE } = process.env;
@@ -13,6 +14,7 @@ if (!BACKEND_DBFILE || !BACKEND_PORT)
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 app.get("/", (_, res) => {
   res.send("Hello World!");

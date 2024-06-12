@@ -1,9 +1,9 @@
 import "reflect-metadata";
 import * as dotenv from "dotenv";
-import { dataSource } from "../config/db";
-import { Ad } from "../entities/Ad";
-import { Category } from "../entities/Category";
-import { Tag } from "../entities/Tag";
+import { dataSource } from "./config/db";
+import { Ad } from "./entities/Ad";
+import { Category } from "./entities/Category";
+import { Tag } from "./entities/Tag";
 
 dotenv.config();
 const { BACKEND_PORT, BACKEND_DBFILE } = process.env;

@@ -1,4 +1,5 @@
 import AdCard from "./AdCard";
+import styles from "../styles/RecentAds.module.css";
 
 export default function RecentAds() {
   const ads = [
@@ -40,9 +41,9 @@ export default function RecentAds() {
     },
   ];
   return (
-    <main className="main-content">
+    <>
       <h2>Annonces récentes</h2>
-      <section className="recent-ads">
+      <section className={styles["recent-ads"]}>
         {ads.map((ad) => (
           <AdCard
             key={ad.title}
@@ -53,6 +54,6 @@ export default function RecentAds() {
           />
         ))}
       </section>
-    </main>
+    </>
   );
 }

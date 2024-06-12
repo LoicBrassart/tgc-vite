@@ -12,3 +12,4 @@
 - Install & use TypeORM
 - Add Tag entity, fixtures, routes
 - Refactoring: Déplacer les routes dans des fichiers séparés par uri (plus pratique pour organiser une API REST)
+- Chore: Ajout de la librairie CORS

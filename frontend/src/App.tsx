@@ -1,14 +1,15 @@
+import { RouterProvider } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header";
-import RecentAds from "./components/RecentAds";
 import styles from "./styles/Layout.module.css";
+import router from "./router/router";
 
 function App() {
   return (
     <>
       <Header />
       <main className={styles["main-content"]}>
-        <RecentAds />
+        <RouterProvider router={router} />
       </main>
     </>
   );

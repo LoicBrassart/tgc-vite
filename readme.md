@@ -8,3 +8,4 @@
 - Split content in reusable components (header, RecentAds, AdCard)
 - Variabilize datasource and use it in components
 - Use CSS modules
+- Install & use react-router

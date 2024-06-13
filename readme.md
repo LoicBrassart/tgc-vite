@@ -9,3 +9,5 @@
 - Variabilize datasource and use it in components
 - Use CSS modules
 - Install & use react-router
+- Add Luxon for date management
+- Go further with react-router + reorganize some files

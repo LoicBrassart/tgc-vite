@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styles from "../styles/Header.module.css";
 
 export default function Header() {
@@ -5,12 +6,12 @@ export default function Header() {
     <header className={styles["header"]}>
       <div className={styles["main-menu"]}>
         <h1>
-          <a href="/" className={styles["button logo link-button"]}>
+          <Link to="/" className={styles["button logo link-button"]}>
             <span className={styles["mobile-short-label"]}>TGC</span>
             <span className={styles["desktop-long-label"]}>
               THE GOOD CORNER
             </span>
-          </a>
+          </Link>
         </h1>
         <form className={styles["text-field-with-button"]}>
           <input
@@ -35,53 +36,53 @@ export default function Header() {
             </svg>
           </button>
         </form>
-        <a href="/post-ad" className={styles["button link-button"]}>
+        <Link to="/post-ad" className={styles["button link-button"]}>
           <span className={styles["mobile-short-label"]}>Publier</span>
           <span className={styles["desktop-long-label"]}>
             Publier une annonce
           </span>
-        </a>
+        </Link>
       </div>
       <nav className={styles["categories-navigation"]}>
-        <a href="" className={styles["category-navigation-link"]}>
+        <Link to="" className={styles["category-navigation-link"]}>
           Ameublement
-        </a>
-        <a href="" className={styles["category-navigation-link"]}>
+        </Link>
+        <Link to="" className={styles["category-navigation-link"]}>
           Électroménager
-        </a>
-        <a href="" className={styles["category-navigation-link"]}>
+        </Link>
+        <Link to="" className={styles["category-navigation-link"]}>
           Photographie
-        </a>
-        <a href="" className={styles["category-navigation-link"]}>
+        </Link>
+        <Link to="" className={styles["category-navigation-link"]}>
           Informatique
-        </a>
-        <a href="" className={styles["category-navigation-link"]}>
+        </Link>
+        <Link to="" className={styles["category-navigation-link"]}>
           Téléphonie
-        </a>
-        <a href="" className={styles["category-navigation-link"]}>
+        </Link>
+        <Link to="" className={styles["category-navigation-link"]}>
           Vélos
-        </a>
-        <a href="" className={styles["category-navigation-link"]}>
+        </Link>
+        <Link to="" className={styles["category-navigation-link"]}>
           Véhicules
-        </a>
-        <a href="" className={styles["category-navigation-link"]}>
+        </Link>
+        <Link to="" className={styles["category-navigation-link"]}>
           Sport
-        </a>
-        <a href="" className={styles["category-navigation-link"]}>
+        </Link>
+        <Link to="" className={styles["category-navigation-link"]}>
           Habillement
-        </a>
-        <a href="" className={styles["category-navigation-link"]}>
+        </Link>
+        <Link to="" className={styles["category-navigation-link"]}>
           Bébé
-        </a>
-        <a href="" className={styles["category-navigation-link"]}>
+        </Link>
+        <Link to="" className={styles["category-navigation-link"]}>
           Outillage
-        </a>
-        <a href="" className={styles["category-navigation-link"]}>
+        </Link>
+        <Link to="" className={styles["category-navigation-link"]}>
           Services
-        </a>
-        <a href="" className={styles["category-navigation-link"]}>
+        </Link>
+        <Link to="" className={styles["category-navigation-link"]}>
           Vacances
-        </a>
+        </Link>
       </nav>
     </header>
   );

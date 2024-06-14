@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import RecentAds from "../pages/RecentAds";
 import ErrorPage from "./ErrorPage";
 import About from "../pages/About";
-import AdDetail from "../pages/AdDetail";
+import AdDetail, { AdDetailLoader } from "../pages/AdDetail";
 import App from "../App";
 
 const router = createBrowserRouter([
@@ -23,6 +23,9 @@ const router = createBrowserRouter([
       {
         path: "/ads/:id/:slug",
         element: <AdDetail />,
+        loader: ({ params }) => {
+          return AdDetailLoader(params.id);
+        },
       },
     ],
   },

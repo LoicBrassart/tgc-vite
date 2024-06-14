@@ -11,3 +11,4 @@
 - Install & use react-router
 - Add Luxon for date management
 - Go further with react-router + reorganize some files
+- Add loader function to /data/:id route

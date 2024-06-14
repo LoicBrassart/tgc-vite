@@ -1,17 +1,22 @@
-import { useParams } from "react-router-dom";
-import { FormEvent, useEffect, useState } from "react";
+import { useLoaderData } from "react-router-dom";
+import { FormEvent, useState } from "react";
 import { DateTime } from "luxon";
 import ads, { Ad } from "../dataMock";
 import styles from "../styles/AdDetail.module.css";
 
-export default function AdDetail() {
-  const id = Number(useParams().id);
-  const [ad, setAd] = useState<Ad | undefined>(undefined);
-  const [editable, setEditable] = useState<boolean>(false);
+export function AdDetailLoader(rawId: string | undefined) {
+  const id = Number(rawId);
+  if (!id || isNaN(id)) throw new Error("Invalid id parameter");
 
-  useEffect(() => {
-    setAd(ads[0]); //Mock data for now
-  }, [id]);
+  const ad = ads.find((ad) => ad.id === id) as Ad; //Mock for now
+  if (!ad) throw new Error("Ad not found");
+
+  return ad;
+}
+
+export default function AdDetail() {
+  const [editable, setEditable] = useState<boolean>(false);
+  const ad = useLoaderData() as Ad;
 
   const hSubmit = (evt: FormEvent) => {
     evt.preventDefault();
@@ -23,7 +28,6 @@ export default function AdDetail() {
   const hChange = () => {};
   const hDelete = () => {};
 
-  if (!ad) return <>Loading...</>;
   return (
     <>
       <h2 className={styles["ad-details-title"]}>{ad.title}</h2>

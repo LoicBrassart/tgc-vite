@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import RecentAds from "../pages/RecentAds";
+import RecentAds, { RecentAdsLoader } from "../pages/RecentAds";
 import ErrorPage from "./ErrorPage";
 import About from "../pages/About";
 import AdDetail, { AdDetailLoader } from "../pages/AdDetail";
@@ -15,6 +15,9 @@ const router = createBrowserRouter([
         path: "/",
         index: true,
         element: <RecentAds />,
+        loader: () => {
+          return RecentAdsLoader();
+        },
       },
       {
         path: "/about",

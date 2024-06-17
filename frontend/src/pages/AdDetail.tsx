@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { FormEvent, useState } from "react";
 import { DateTime } from "luxon";
 import { Ad } from "../dataMock";
@@ -21,6 +21,7 @@ export async function AdDetailLoader(rawId: string | undefined) {
 export default function AdDetail() {
   const [editable, setEditable] = useState<boolean>(false);
   const ad = useLoaderData() as Ad;
+  const navigate = useNavigate();
 
   const hSubmit = (evt: FormEvent) => {
     evt.preventDefault();
@@ -30,7 +31,17 @@ export default function AdDetail() {
     setEditable(false);
   };
   const hChange = () => {};
-  const hDelete = () => {};
+  const hDelete = async () => {
+    try {
+      await fetch(`http://localhost:3000/ads/${ad.id}`, {
+        method: "DELETE",
+      });
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  };
 
   return (
     <>

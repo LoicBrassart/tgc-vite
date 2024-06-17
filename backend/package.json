@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "ts-node-dev src/index.ts",
-    "seed": "ts-node-dev src/scripts/seed.ts"
+    "seed": "ts-node-dev src/seed.ts"
   },
   "keywords": [],
   "author": "",

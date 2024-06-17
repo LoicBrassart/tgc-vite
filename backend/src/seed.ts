@@ -37,6 +37,7 @@ const adsData = [
       "https://images.lecho.be/view?iid=dc:113129565&context=ONLINE&ratio=16/9&width=640&u=1508242455000",
     location: "Paris",
     id_category: 1,
+    createdAt: 1718618203,
   },
   {
     title: "Car to sell",
@@ -48,6 +49,7 @@ const adsData = [
       "https://www.automobile-magazine.fr/asset/cms/34973/config/28294/apres-plusieurs-prototypes-la-bollore-bluecar-a-fini-par-devoiler-sa-version-definitive.jpg",
     location: "Paris",
     id_category: 2,
+    createdAt: 1534898206,
   },
 ];
 
@@ -78,10 +80,11 @@ async function seed() {
         const ad = new Ad();
         ad.title = adData.title;
         ad.description = adData.description;
-        ad.imgUrl = adData.picture;
+        ad.img = adData.picture;
         ad.location = adData.location;
         ad.owner = adData.owner;
         ad.price = adData.price;
+        ad.createdAt = adData.createdAt;
         ad.category = savedCategories[0];
         ad.tags = [savedTags[0]];
 

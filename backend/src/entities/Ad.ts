@@ -35,7 +35,10 @@ export class Ad extends BaseEntity {
     default:
       "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg",
   })
-  imgUrl: string;
+  img: string;
+
+  @Column()
+  createdAt: number;
 
   @ManyToOne(() => Category, (category) => category.ads)
   category: Category;

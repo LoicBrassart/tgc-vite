@@ -1,17 +1,21 @@
 import { useLoaderData } from "react-router-dom";
 import { FormEvent, useState } from "react";
 import { DateTime } from "luxon";
-import ads, { Ad } from "../dataMock";
+import { Ad } from "../dataMock";
 import styles from "../styles/AdDetail.module.css";
 
-export function AdDetailLoader(rawId: string | undefined) {
+export async function AdDetailLoader(rawId: string | undefined) {
   const id = Number(rawId);
   if (!id || isNaN(id)) throw new Error("Invalid id parameter");
 
-  const ad = ads.find((ad) => ad.id === id) as Ad; //Mock for now
-  if (!ad) throw new Error("Ad not found");
-
-  return ad;
+  try {
+    const response = await fetch(`http://localhost:3000/ads/${id}`);
+    const ad: Ad = await response.json();
+    return ad;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
 }
 
 export default function AdDetail() {

@@ -12,3 +12,4 @@
 - Add Luxon for date management
 - Go further with react-router + reorganize some files
 - Add loader function to /data/:id route
+- Plug the frontend to the backend REST api + fix Ad entity to match needed data in frontend

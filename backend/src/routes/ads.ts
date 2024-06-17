@@ -55,7 +55,8 @@ router.post("/", async (req, res) => {
     ad.owner = owner;
     ad.price = price;
     ad.location = location;
-    ad.imgUrl = picture;
+    ad.img = picture;
+    ad.createdAt = new Date().getTime();
     ad.category = category;
     ad.tags = tags;
 
@@ -85,6 +86,7 @@ router.put("/:id", async (req, res) => {
       price,
       picture,
       location,
+      createdAt,
       id_category,
       id_tags,
     } = req.body;
@@ -98,7 +100,8 @@ router.put("/:id", async (req, res) => {
     ad.owner = owner;
     ad.price = price;
     ad.location = location;
-    ad.imgUrl = picture;
+    ad.img = picture;
+    ad.createdAt = createdAt;
     ad.category = category;
     ad.tags = tags;
 
@@ -118,6 +121,7 @@ router.patch("/:id", async (req, res) => {
       price,
       picture,
       location,
+      createdAt,
       id_category,
       id_tags,
     } = req.body;
@@ -131,7 +135,8 @@ router.patch("/:id", async (req, res) => {
     ad.owner = owner || ad.owner;
     ad.price = price || ad.price;
     ad.location = location || ad.location;
-    ad.imgUrl = picture || ad.imgUrl;
+    ad.img = picture || ad.img;
+    ad.createdAt = createdAt;
     ad.category = category || ad.category;
     ad.tags = tags;
 

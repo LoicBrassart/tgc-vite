@@ -9,3 +9,4 @@
 - [Frontend] Install needed packages
 - [Frontend] Configure codegen to generate custom hooks for every Query/Mutation
 - [Frontend] List all queries needed for our frontend website and generate hooks with Codegen
+- [Frontend] Set up Apollo provider

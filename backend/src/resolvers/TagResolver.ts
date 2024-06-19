@@ -5,7 +5,10 @@ import { Query, Resolver } from "type-graphql";
 class TagResolver {
   @Query(() => [Tag])
   async getAllTags() {
-    return await Tag.find();
+    const tags = await Tag.find({
+      relations: ["ads"],
+    });
+    return tags;
   }
 }
 

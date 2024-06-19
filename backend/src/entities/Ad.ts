@@ -51,14 +51,14 @@ export class Ad extends BaseEntity {
 
   @Field()
   @Column()
-  createdAt: number;
+  createdAt: Date;
 
   @Field(() => Category)
-  @ManyToOne(() => Category, (category) => category.ads)
+  @ManyToOne(() => Category, (category) => category.ads, { eager: true })
   category: Category;
 
   @Field(() => [Tag])
-  @ManyToMany(() => Tag, (tag) => tag.ads, { cascade: true })
+  @ManyToMany(() => Tag, (tag) => tag.ads, { cascade: true, eager: true })
   @JoinTable()
-  tags: Tag[];
+  tags?: Tag[];
 }

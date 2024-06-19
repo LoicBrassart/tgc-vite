@@ -1,31 +1,30 @@
 import "reflect-metadata";
-import express from "express";
 import * as dotenv from "dotenv";
 import { dataSource } from "./config/db";
-import adRouter from "./routes/ads";
-import categoryRouter from "./routes/categories";
-import tagRouter from "./routes/tags";
-import cors from "cors";
+import { buildSchema } from "type-graphql";
+import AdResolver from "./resolvers/AdResolver";
+import CategoryResolver from "./resolvers/CategoryResolver";
+import TagResolver from "./resolvers/TagResolver";
+import { ApolloServer } from "@apollo/server";
+import { startStandaloneServer } from "@apollo/server/standalone";
 
 dotenv.config();
 const { BACKEND_PORT, BACKEND_DBFILE } = process.env;
 if (!BACKEND_DBFILE || !BACKEND_PORT)
   throw new Error("Missing essential env variables!");
 
-const app = express();
-app.use(express.json());
-app.use(cors());
-
-app.get("/", (_, res) => {
-  res.send("Hello World!");
-});
-
-app.use("/ads", adRouter);
-app.use("/categories", categoryRouter);
-app.use("/tags", tagRouter);
-
-app.listen(BACKEND_PORT, async () => {
+const start = async () => {
   await dataSource.initialize();
+  const schema = await buildSchema({
+    resolvers: [AdResolver, CategoryResolver, TagResolver],
+  });
 
-  console.log(`Example app listening on port ${BACKEND_PORT}`);
-});
+  const server = new ApolloServer({ schema });
+  const { url } = await startStandaloneServer(server, {
+    listen: { port: 4000 },
+  });
+
+  console.log(`🚀  Server ready at: ${url}`);
+};
+
+start();

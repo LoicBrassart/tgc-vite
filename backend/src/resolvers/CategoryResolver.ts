@@ -5,6 +5,9 @@ import { Query, Resolver } from "type-graphql";
 export default class CategoryResolver {
   @Query(() => [Category])
   async getAllCategories() {
-    return await Category.find();
+    const categories = await Category.find({
+      relations: ["ads"],
+    });
+    return categories;
   }
 }

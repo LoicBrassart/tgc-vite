@@ -22,5 +22,5 @@ export class Tag extends BaseEntity {
 
   @Field(() => [Ad])
   @ManyToMany(() => Ad, (ad) => ad.tags, { onDelete: "CASCADE" })
-  ads: Ad[];
+  ads?: Ad[];
 }

@@ -22,5 +22,5 @@ export class Category extends BaseEntity {
 
   @Field(() => [Ad])
   @OneToMany(() => Ad, (ad) => ad.category)
-  ads: Ad[];
+  ads?: Ad[];
 }

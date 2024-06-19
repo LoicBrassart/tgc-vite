@@ -1,6 +1,6 @@
-import { Ad } from "@/entities/Ad";
-import { Category } from "@/entities/Category";
-import { Tag } from "@/entities/Tag";
+import { Ad } from "../entities/Ad";
+import { Category } from "../entities/Category";
+import { Tag } from "../entities/Tag";
 import {
   Arg,
   Field,
@@ -23,16 +23,16 @@ class NewAdInput implements Partial<Ad> {
   price: number;
 
   @Field(() => String, { nullable: true })
-  imgUrl?: string | undefined;
+  imgUrl?: string;
 
   @Field()
-  ville: string;
+  location: string;
 
   @Field(() => ID)
   category: Category;
 
   @Field(() => [ID])
-  tags?: Tag[] | undefined;
+  tags?: Tag[];
 }
 
 @Resolver(Ad)
@@ -40,18 +40,16 @@ export default class AdResolver {
   @Query(() => [Ad])
   async getAllAds() {
     const ads = await Ad.find({
-      relations: {
-        category: true,
-        tags: true,
-      },
+      relations: ["category", "tags"],
     });
     return ads;
   }
 
   @Query(() => Ad)
   async getAdById(@Arg("adId") adId: string) {
-    const ad = await Ad.findOneByOrFail({
-      id: Number.parseInt(adId),
+    const ad = await Ad.findOneOrFail({
+      where: { id: Number(adId) },
+      relations: ["category", "tags"],
     });
     return ad;
   }

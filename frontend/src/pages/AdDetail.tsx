@@ -3,15 +3,13 @@ import { FormEvent, useState } from "react";
 import { DateTime } from "luxon";
 import { Ad } from "../dataMock";
 import styles from "../styles/AdDetail.module.css";
+import sdk from "../graphql/sdk";
 
-export async function AdDetailLoader(rawId: string | undefined) {
-  const id = Number(rawId);
-  if (!id || isNaN(id)) throw new Error("Invalid id parameter");
-
+export async function AdDetailLoader(rawId: string) {
+  const adId = rawId;
   try {
-    const response = await fetch(`http://localhost:3000/ads/${id}`);
-    const ad: Ad = await response.json();
-    return ad;
+    const { getAdById } = await sdk.GetAdById({ adId });
+    return getAdById;
   } catch (err) {
     console.error(err);
     throw err;
@@ -30,12 +28,12 @@ export default function AdDetail() {
   const hReset = () => {
     setEditable(false);
   };
-  const hChange = () => {};
+  const hChange = () => {
+    console.log("TODO: frontend/src/pages/AdDetail.tsx:hChange");
+  };
   const hDelete = async () => {
     try {
-      await fetch(`http://localhost:3000/ads/${ad.id}`, {
-        method: "DELETE",
-      });
+      console.log("TODO: frontend/src/pages/AdDetail.tsx:hDelete");
       navigate("/");
     } catch (err) {
       console.error(err);

@@ -27,7 +27,7 @@ const router = createBrowserRouter([
         path: "/ads/:id/:slug",
         element: <AdDetail />,
         loader: ({ params }) => {
-          return AdDetailLoader(params.id);
+          return AdDetailLoader(params.id!);
         },
       },
     ],

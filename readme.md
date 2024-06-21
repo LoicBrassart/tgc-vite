@@ -1,13 +1,7 @@
 # Backend
 
-## S03 - GraphQL
+## S04 - Docker & Microservices
 
-- [Backend] Install needed packages
-- [Backend] Initialize entities sructures
-- [Backend] Create entity-related structures: Input types & resolvers
-- [Backend] Setup GraphQL api itself
-- [Frontend] Install needed packages
-- [Frontend] Configure codegen to generate custom hooks for every Query/Mutation
-- [Frontend] List all queries needed for our frontend website and generate hooks with Codegen
-- [Frontend] Set up Apollo provider
-- [Frontend] Update codegen and implementation to account for differences between Next and Vite/React-Router applications
+- Add Dockerfiles to frontend and backend
+  - [Backend] Fix an error in seed.ts about date format
+  - [Frontend] Downgrade the `graphql-request` version because of lack of support in `@graphql-codegen/typescript-graphql-request`

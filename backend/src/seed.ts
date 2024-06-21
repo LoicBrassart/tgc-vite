@@ -84,7 +84,7 @@ async function seed() {
         ad.location = adData.location;
         ad.owner = adData.owner;
         ad.price = adData.price;
-        ad.createdAt = adData.createdAt;
+        ad.createdAt = new Date(adData.createdAt);
         ad.category = savedCategories[0];
         ad.tags = [savedTags[0]];
 

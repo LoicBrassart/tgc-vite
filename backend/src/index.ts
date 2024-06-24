@@ -21,7 +21,7 @@ const start = async () => {
 
   const server = new ApolloServer({ schema });
   const { url } = await startStandaloneServer(server, {
-    listen: { port: 4000 },
+    listen: { port: Number(BACKEND_PORT) },
   });
 
   console.log(`🚀  Server ready at: ${url}`);

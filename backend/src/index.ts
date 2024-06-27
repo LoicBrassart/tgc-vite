@@ -2,11 +2,12 @@ import "reflect-metadata";
 import * as dotenv from "dotenv";
 import { dataSource } from "./config/db";
 import { buildSchema } from "type-graphql";
+import { ApolloServer } from "@apollo/server";
+import { startStandaloneServer } from "@apollo/server/standalone";
 import AdResolver from "./resolvers/AdResolver";
 import CategoryResolver from "./resolvers/CategoryResolver";
 import TagResolver from "./resolvers/TagResolver";
-import { ApolloServer } from "@apollo/server";
-import { startStandaloneServer } from "@apollo/server/standalone";
+import UserResolver from "./resolvers/UserResolver";
 
 dotenv.config();
 const { BACKEND_PORT } = process.env;
@@ -15,7 +16,7 @@ if (!BACKEND_PORT) throw new Error("Missing essential env variables!");
 const start = async () => {
   await dataSource.initialize();
   const schema = await buildSchema({
-    resolvers: [AdResolver, CategoryResolver, TagResolver],
+    resolvers: [AdResolver, CategoryResolver, TagResolver, UserResolver],
   });
 
   const server = new ApolloServer({ schema });

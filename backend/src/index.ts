@@ -9,9 +9,8 @@ import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 
 dotenv.config();
-const { BACKEND_PORT, BACKEND_DBFILE } = process.env;
-if (!BACKEND_DBFILE || !BACKEND_PORT)
-  throw new Error("Missing essential env variables!");
+const { BACKEND_PORT } = process.env;
+if (!BACKEND_PORT) throw new Error("Missing essential env variables!");
 
 const start = async () => {
   await dataSource.initialize();

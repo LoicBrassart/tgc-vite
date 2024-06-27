@@ -9,3 +9,5 @@
   - Use env variables instead of hardcoded values
   - [Frontend] Add the "--host" option to startup command to allow network connection
   - [Frontend] Environment variables must be prefixed with "VITE\_" to be accessible from our webapp. On the plus side, dotenv is available OotB with Vite, no need to install it
+- Replace SQLite with a PostGreSQL database, an Adminer interface for it, and add an NGinx gateway to expose a unique port for our project
+  - Add and fix env variables

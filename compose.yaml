@@ -18,6 +18,14 @@ services:
       - ./frontend:/app/
     restart: always
 
+  files:
+    build: ./files
+    volumes:
+      - ./files/src:/app/src
+      - ./data/uploads:/app/uploads
+    env_file:
+      - .env
+
   db:
     image: postgres
     env_file: .env
@@ -28,7 +36,7 @@ services:
       timeout: 5s
       retries: 20
     volumes:
-      - ./data:/var/lib/postgresql
+      - ./data/database:/var/lib/postgresql/data
 
   adminer:
     image: adminer

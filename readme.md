@@ -11,3 +11,4 @@
   - [Frontend] Environment variables must be prefixed with "VITE\_" to be accessible from our webapp. On the plus side, dotenv is available OotB with Vite, no need to install it
 - Replace SQLite with a PostGreSQL database, an Adminer interface for it, and add an NGinx gateway to expose a unique port for our project
   - Add and fix env variables
+- Bonus: Add a Makefile to store useful/common commands

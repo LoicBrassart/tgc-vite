@@ -15,3 +15,4 @@
 - Bonus: Add restart policy, healthchecks & dependencies, and DCompose profiles to compose.yaml
 - Fix: Add a volume for data persistence
 - Add a "files" microservices for handling uploads
+- Remove sqlite3 from backend

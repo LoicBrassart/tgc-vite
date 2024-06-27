@@ -13,3 +13,4 @@
   - Add and fix env variables
 - Bonus: Add a Makefile to store useful/common commands
 - Bonus: Add restart policy, healthchecks & dependencies, and DCompose profiles to compose.yaml
+- Fix: Add a volume for data persistence

@@ -43,7 +43,7 @@ export default class AdResolver {
   @Query(() => [Ad])
   async getAllAds() {
     const ads = await Ad.find({
-      relations: ["category", "tags"],
+      relations: ["category", "tags", "owner"],
     });
     return ads;
   }
@@ -52,7 +52,7 @@ export default class AdResolver {
   async getAdById(@Arg("adId") adId: string) {
     const ad = await Ad.findOneOrFail({
       where: { id: Number(adId) },
-      relations: ["category", "tags"],
+      relations: ["category", "tags", "owner"],
     });
     return ad;
   }

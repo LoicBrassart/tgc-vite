@@ -1,15 +1,22 @@
 import "reflect-metadata";
-import * as dotenv from "dotenv";
 import { dataSource } from "./config/db";
 import { Ad } from "./entities/Ad";
 import { Category } from "./entities/Category";
 import { Tag } from "./entities/Tag";
+import { User } from "./entities/User";
 
-dotenv.config();
-const { BACKEND_PORT, BACKEND_DBFILE } = process.env;
-if (!BACKEND_DBFILE || !BACKEND_PORT)
-  throw new Error("Missing essential env variables!");
-
+const usersData = [
+  {
+    mail: "loic@spamland.com",
+    hashedPassword: "n/a",
+    roles: "ADMIN, USER",
+  },
+  {
+    mail: "toto@spamland.com",
+    hashedPassword: "n/a",
+    roles: "USER",
+  },
+];
 const categoriesData = [
   {
     name: "Vetements",
@@ -57,6 +64,17 @@ async function seed() {
   try {
     await dataSource.initialize();
 
+    const savedUsers = await Promise.all(
+      usersData.map(async (userData) => {
+        const user = new User();
+        user.mail = userData.mail;
+        user.roles = userData.roles;
+        user.hashedPassword = userData.hashedPassword;
+        return user.save();
+      })
+    );
+    console.log("Utilisateurs enregistrés avec succès:", savedUsers.length);
+
     const savedCategories = await Promise.all(
       categoriesData.map(async (categoryData) => {
         const category = new Category();
@@ -82,7 +100,7 @@ async function seed() {
         ad.description = adData.description;
         ad.img = adData.picture;
         ad.location = adData.location;
-        ad.owner = adData.owner;
+        ad.owner = savedUsers[0];
         ad.price = adData.price;
         ad.createdAt = new Date(adData.createdAt);
         ad.category = savedCategories[0];

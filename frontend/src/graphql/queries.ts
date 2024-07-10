@@ -19,7 +19,11 @@ export const GET_AD_BY_ID = gql`
       id
       title
       description
-      owner
+      owner {
+        id
+        mail
+        roles
+      }
       location
       img
       price
@@ -34,7 +38,11 @@ export const GET_ALL_ADS = gql`
       title
       price
       description
-      owner
+      owner {
+        id
+        mail
+        roles
+      }
       location
       img
     }

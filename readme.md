@@ -12,3 +12,4 @@
   - Copy compose.yaml into a new `compose.e2e.yaml` file
   - Add a "e2e" service using Playwright once the other services are up
   - Add a Dockerfile in `e2e` (the only folder you need is `tests`)
+- Fix and bump misc files

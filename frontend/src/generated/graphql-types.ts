@@ -26,7 +26,7 @@ export type Ad = {
   id: Scalars['Float']['output'];
   img: Scalars['String']['output'];
   location: Scalars['String']['output'];
-  owner: Scalars['String']['output'];
+  owner: User;
   price: Scalars['Float']['output'];
   tags: Array<Tag>;
   title: Scalars['String']['output'];
@@ -42,11 +42,29 @@ export type Category = {
 export type Mutation = {
   __typename?: 'Mutation';
   createNewAd: Ad;
+  deleteAd: Ad;
+  login: Scalars['String']['output'];
+  signup: Scalars['String']['output'];
 };
 
 
 export type MutationCreateNewAdArgs = {
   data: NewAdInput;
+};
+
+
+export type MutationDeleteAdArgs = {
+  adId: Scalars['Float']['input'];
+};
+
+
+export type MutationLoginArgs = {
+  data: NewUserInput;
+};
+
+
+export type MutationSignupArgs = {
+  data: NewUserInput;
 };
 
 export type NewAdInput = {
@@ -59,12 +77,18 @@ export type NewAdInput = {
   title: Scalars['String']['input'];
 };
 
+export type NewUserInput = {
+  mail: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+};
+
 export type Query = {
   __typename?: 'Query';
   getAdById: Ad;
   getAllAds: Array<Ad>;
   getAllCategories: Array<Category>;
   getAllTags: Array<Tag>;
+  getAllUsers: Array<User>;
 };
 
 
@@ -79,6 +103,15 @@ export type Tag = {
   name: Scalars['String']['output'];
 };
 
+export type User = {
+  __typename?: 'User';
+  ads: Array<Ad>;
+  hashedPassword: Scalars['String']['output'];
+  id: Scalars['Float']['output'];
+  mail: Scalars['String']['output'];
+  roles: Scalars['String']['output'];
+};
+
 export type GetAllCategoriesAndTagsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -89,12 +122,12 @@ export type GetAdByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetAdByIdQuery = { __typename?: 'Query', getAdById: { __typename?: 'Ad', id: number, title: string, description: string, owner: string, location: string, img: string, price: number } };
+export type GetAdByIdQuery = { __typename?: 'Query', getAdById: { __typename?: 'Ad', id: number, title: string, description: string, location: string, img: string, price: number, owner: { __typename?: 'User', id: number, mail: string, roles: string } } };
 
 export type GetAllAdsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllAdsQuery = { __typename?: 'Query', getAllAds: Array<{ __typename?: 'Ad', id: number, title: string, price: number, description: string, owner: string, location: string, img: string }> };
+export type GetAllAdsQuery = { __typename?: 'Query', getAllAds: Array<{ __typename?: 'Ad', id: number, title: string, price: number, description: string, location: string, img: string, owner: { __typename?: 'User', id: number, mail: string, roles: string } }> };
 
 
 export const GetAllCategoriesAndTagsDocument = gql`
@@ -115,7 +148,11 @@ export const GetAdByIdDocument = gql`
     id
     title
     description
-    owner
+    owner {
+      id
+      mail
+      roles
+    }
     location
     img
     price
@@ -129,7 +166,11 @@ export const GetAllAdsDocument = gql`
     title
     price
     description
-    owner
+    owner {
+      id
+      mail
+      roles
+    }
     location
     img
   }

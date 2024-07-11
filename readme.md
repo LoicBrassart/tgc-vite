@@ -2,6 +2,8 @@
 
 ## S07 - Tests
 
+_NB: This branch went a bit out of control and contains code meant for other features (auth, cart management, ...), please examine it carefully 🙏_
+
 ### E2E Tests - Playwright
 
 - Initialize PWright in a new "e2e" folder
@@ -15,3 +17,9 @@
 - Fix and bump misc files
 - Fix seed script
 - Fix and bump other files (more than I thought!)
+
+### Unit Tests - Vitest
+
+- Initialize Vitest
+  - Install Vitest as a devDependancy in your frontend
+  - Add a "test" command in your package.json

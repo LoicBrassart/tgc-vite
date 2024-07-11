@@ -48,3 +48,15 @@ export const GET_ALL_ADS = gql`
     }
   }
 `;
+
+export const SIGNUP = gql`
+  mutation Signup($data: NewUserInput!) {
+    signup(data: $data)
+  }
+`;
+
+export const LOGIN = gql`
+  mutation Login($data: NewUserInput!) {
+    login(data: $data)
+  }
+`;

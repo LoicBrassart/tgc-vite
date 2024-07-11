@@ -129,6 +129,20 @@ export type GetAllAdsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAllAdsQuery = { __typename?: 'Query', getAllAds: Array<{ __typename?: 'Ad', id: number, title: string, price: number, description: string, location: string, img: string, owner: { __typename?: 'User', id: number, mail: string, roles: string } }> };
 
+export type SignupMutationVariables = Exact<{
+  data: NewUserInput;
+}>;
+
+
+export type SignupMutation = { __typename?: 'Mutation', signup: string };
+
+export type LoginMutationVariables = Exact<{
+  data: NewUserInput;
+}>;
+
+
+export type LoginMutation = { __typename?: 'Mutation', login: string };
+
 
 export const GetAllCategoriesAndTagsDocument = gql`
     query GetAllCategoriesAndTags {
@@ -176,6 +190,16 @@ export const GetAllAdsDocument = gql`
   }
 }
     `;
+export const SignupDocument = gql`
+    mutation Signup($data: NewUserInput!) {
+  signup(data: $data)
+}
+    `;
+export const LoginDocument = gql`
+    mutation Login($data: NewUserInput!) {
+  login(data: $data)
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 
@@ -192,6 +216,12 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetAllAds(variables?: GetAllAdsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllAdsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllAdsQuery>(GetAllAdsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllAds', 'query', variables);
+    },
+    Signup(variables: SignupMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<SignupMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<SignupMutation>(SignupDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Signup', 'mutation', variables);
+    },
+    Login(variables: LoginMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<LoginMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<LoginMutation>(LoginDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Login', 'mutation', variables);
     }
   };
 }

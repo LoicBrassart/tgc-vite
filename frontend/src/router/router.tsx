@@ -4,6 +4,7 @@ import ErrorPage from "./ErrorPage";
 import About from "../pages/About";
 import AdDetail, { AdDetailLoader } from "../pages/AdDetail";
 import App from "../App";
+import Login from "../pages/Login";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
         loader: () => {
           return RecentAdsLoader();
         },
+      },
+      {
+        path: "/login",
+        element: <Login />,
       },
       {
         path: "/about",

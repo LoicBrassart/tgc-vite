@@ -27,9 +27,7 @@ function setCookie(ctx: any, key: string, value: string) {
   if (!process.env.COOKIE_TTL) throw new Error("Missing ttl conf key!");
   const myDate = new Date();
   const expiryTStamp = myDate.getTime() + Number(process.env.COOKIE_TTL);
-  console.log(myDate.toUTCString());
   myDate.setTime(expiryTStamp);
-  console.log(myDate.toUTCString());
   ctx.res.setHeader(
     "Set-Cookie",
     `${key}=${value};secure;httpOnly;SameSite=Strict;expires=${myDate.toUTCString()}`
@@ -91,6 +89,7 @@ class UserResolver {
       setCookie(context, "token", token);
       return JSON.stringify(getUserPublicProfile(user));
     } catch (err) {
+      console.error(err);
       return err;
     }
   }

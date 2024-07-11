@@ -26,3 +26,6 @@ _NB: This branch went a bit out of control and contains code meant for other fea
 - Setup your test file
   - Add a file to contain your function (ie. `src/lib/getTva.ts`), exporting your function
   - Add a file to contain your tests (ie. `src/lib/tests/getTva.spec.ts`), import your function and `test` it
+    _To take a TDD approach, write your tests first, **then** try to write an implementation !_
+- Setup additional packages for integration tests
+  - ⚠️ I added a bunch of unrelated files here, sorry for that!

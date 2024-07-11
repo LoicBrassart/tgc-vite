@@ -23,3 +23,6 @@ _NB: This branch went a bit out of control and contains code meant for other fea
 - Initialize Vitest
   - Install Vitest as a devDependancy in your frontend
   - Add a "test" command in your package.json
+- Setup your test file
+  - Add a file to contain your function (ie. `src/lib/getTva.ts`), exporting your function
+  - Add a file to contain your tests (ie. `src/lib/tests/getTva.spec.ts`), import your function and `test` it

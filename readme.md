@@ -29,3 +29,4 @@ _NB: This branch went a bit out of control and contains code meant for other fea
     _To take a TDD approach, write your tests first, **then** try to write an implementation !_
 - Setup additional packages for integration tests
   - ⚠️ I added a bunch of unrelated files here, sorry for that!
+- Update vite.config.ts to configure Vitest

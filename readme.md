@@ -30,3 +30,6 @@ _NB: This branch went a bit out of control and contains code meant for other fea
 - Setup additional packages for integration tests
   - ⚠️ I added a bunch of unrelated files here, sorry for that!
 - Update vite.config.ts to configure Vitest
+- Add tests for your components (ie. pages)
+  - About is a "silly" page, easy to test
+  - RecentAds is more complicated and needs to mock the loader function

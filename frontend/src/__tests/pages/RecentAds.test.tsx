@@ -10,7 +10,7 @@ vi.mock("react-router-dom", () => ({
 }));
 
 describe("RecentAds", () => {
-  it("affiche corectement les annonces après chargement", async () => {
+  it("affiche correctement les annonces après chargement", async () => {
     const mockAds = [
       {
         id: 1,
